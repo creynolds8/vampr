@@ -44,27 +44,27 @@ class Vampire {
   // For example:
   // * when comparing Ansel and Sarah, Ansel is the closest common anscestor.
   // * when comparing Ansel and Andrew, Ansel is the closest common anscestor.
-  
+
   // thanks to Evgheni for helping with this strech method!!
   // helper function
   vampirsAncestor() {
     let ancestors = [];
-    ancestors.push(this)
+    ancestors.push(this);
     if (this.creator) {
       ancestors = ancestors.concat(this.creator.vampirsAncestor());
     }
     return ancestors;
   }
-  
+
   closestCommonAncestor(vampire) {
-   const arr1 = this.vampirsAncestor();
-   const arr2 = vampire.vampirsAncestor();
-   let result = arr1.filter((element) => {
-    if (arr2.indexOf(element) !== -1) {
-      return element;
-    }
-   })
-   return result[0];
+    const arr1 = this.vampirsAncestor();
+    const arr2 = vampire.vampirsAncestor();
+    let result = arr1.filter((element) => {
+      if (arr2.indexOf(element) !== -1) {
+        return element;
+      }
+    });
+    return result[0];
   }
 
   // return vampire object with given name
@@ -82,8 +82,8 @@ class Vampire {
     let descendents = 0;
     descendents += this.offspring.length;
     for (const descendent of this.offspring) {
-        descendents += descendent.totalDescendents;
-      }
+      descendents += descendent.totalDescendents;
+    }
     return descendents;
   }
 
@@ -91,10 +91,12 @@ class Vampire {
   get allMillennialVampires() {
     let millennialVampires = [];
     if (this.yearConverted > 1980) {
-      millennialVampires.push(this)
+      millennialVampires.push(this);
     }
     for (const descendent of this.offspring) {
-      millennialVampires = millennialVampires.concat(descendent.allMillennialVampires);
+      millennialVampires = millennialVampires.concat(
+        descendent.allMillennialVampires
+      );
     }
     return millennialVampires;
   }
