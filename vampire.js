@@ -45,6 +45,7 @@ class Vampire {
   // * when comparing Ansel and Sarah, Ansel is the closest common anscestor.
   // * when comparing Ansel and Andrew, Ansel is the closest common anscestor.
   
+  // thanks to Evgheni for helping with this strech method!!
   // helper function
   vampirsAncestor() {
     let ancestors = [];
@@ -64,6 +65,38 @@ class Vampire {
     }
    })
    return result[0];
+  }
+
+  // return vampire object with given name
+  vampireWithName(name) {
+    if (this.name === name) return this;
+    for (const descendent of this.offspring) {
+      const found = descendent.vampireWithName(name);
+      if (found) return found;
+    }
+    return null;
+  }
+
+  // return the number of descendents
+  get totalDescendents() {
+    let descendents = 0;
+    descendents += this.offspring.length;
+    for (const descendent of this.offspring) {
+        descendents += descendent.totalDescendents;
+      }
+    return descendents;
+  }
+
+  // return array of vampires created after 1980
+  get allMillennialVampires() {
+    let millennialVampires = [];
+    if (this.yearConverted > 1980) {
+      millennialVampires.push(this)
+    }
+    for (const descendent of this.offspring) {
+      millennialVampires = millennialVampires.concat(descendent.allMillennialVampires);
+    }
+    return millennialVampires;
   }
 }
 module.exports = Vampire;
